@@ -76,7 +76,9 @@ class LiteQuery : public td::actor::Actor {
   enum {
     default_timeout_msec = 4500,      // 4.5 seconds
     max_transaction_count = 16,       // fetch at most 16 transactions in one query
-    client_method_gas_limit = 300000  // gas limit for liteServer.runSmcMethod
+    // Modified by Chorus to make it possible to execute some lite server methods
+    // server side, without running TVM client side (as liteclient binary does).
+    client_method_gas_limit = 1000000  // gas limit for liteServer.runSmcMethod
   };
   enum {
     ls_version = 0x101,
