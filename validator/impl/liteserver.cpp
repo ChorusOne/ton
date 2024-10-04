@@ -1530,7 +1530,7 @@ void LiteQuery::finish_runSmcMethod(td::BufferSlice shard_proof, td::BufferSlice
   stack_ = vm.get_stack_ref();
   LOG(INFO) << "runSmcMethod(" << acc_workchain_ << ":" << acc_addr_.to_hex() << ") query completed: exit code is "
             << exit_code;
-  vm::FakeVmStateLimits fstate(1000);  // limit recursive (de)serialization calls
+  vm::FakeVmStateLimits fstate(1000000);  // limit recursive (de)serialization calls
   vm::VmStateInterface::Guard guard(&fstate);
   Ref<vm::Cell> cell;
   td::BufferSlice c7_info, result;
