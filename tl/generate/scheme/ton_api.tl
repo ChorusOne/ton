@@ -636,6 +636,8 @@ adnl.ping value:long = adnl.Pong;
 
 ---types---
 
+engine.validator.version version:string = engine.validator.Version;
+
 engine.validator.keyHash key_hash:int256 = engine.validator.KeyHash;
 engine.validator.signature signature:bytes = engine.validator.Signature;
 
@@ -781,6 +783,7 @@ engine.validator.showShardBlockVerifierConfig = engine.validator.ShardBlockVerif
 
 engine.validator.setRegistryVotingConfig config:engine.validator.registryVotingConfig = engine.validator.Success;
 engine.validator.showRegistryVotingConfig = engine.validator.RegistryVotingConfig;
+engine.validator.getVersion = engine.validator.Version;
 
 engine.validator.waitForLiteServer = engine.validator.Success;
 engine.validator.waitForInitialSync = engine.validator.Success;
