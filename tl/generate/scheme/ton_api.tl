@@ -703,6 +703,8 @@ adnl.ping value:long = adnl.Pong;
 
 ---types---
 
+engine.validator.version version:string = engine.validator.Version;
+
 engine.validator.keyHash key_hash:int256 = engine.validator.KeyHash;
 engine.validator.signature signature:bytes = engine.validator.Signature;
 
@@ -818,6 +820,8 @@ engine.validator.getActorTextStats = engine.validator.TextStats;
 
 engine.validator.addShard shard:tonNode.shardId = engine.validator.Success;
 engine.validator.delShard shard:tonNode.shardId = engine.validator.Success;
+
+engine.validator.getVersion = engine.validator.Version;
 
 ---types---
 
