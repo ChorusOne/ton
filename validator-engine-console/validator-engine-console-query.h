@@ -1443,3 +1443,22 @@ class DelShardQuery : public Query {
  private:
   ton::ShardIdFull shard_;
 };
+
+class GetVersionQuery : public Query {
+ public:
+  GetVersionQuery(td::actor::ActorId<ValidatorEngineConsole> console, Tokenizer tokenizer)
+      : Query(console, std::move(tokenizer)) {
+  }
+  td::Status run() override;
+  td::Status send() override;
+  td::Status receive(td::BufferSlice data) override;
+  static std::string get_name() {
+    return "version";
+  }
+  static std::string get_help() {
+    return "version\tget validator-engine version";
+  }
+  std::string name() const override {
+    return get_name();
+  }
+};
