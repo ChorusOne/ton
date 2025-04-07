@@ -730,6 +730,8 @@ adnl.ping value:long = adnl.Pong;
 
 ---types---
 
+engine.validator.version version:string = engine.validator.Version;
+
 engine.validator.keyHash key_hash:int256 = engine.validator.KeyHash;
 engine.validator.signature signature:bytes = engine.validator.Signature;
 
@@ -872,6 +874,8 @@ engine.validator.delFastSyncClient adnl_id:int256 = engine.validator.Success;
 
 engine.validator.setShardBlockVerifierConfig config:engine.validator.shardBlockVerifierConfig = engine.validator.Success;
 engine.validator.showShardBlockVerifierConfig = engine.validator.ShardBlockVerifierConfig;
+
+engine.validator.getVersion = engine.validator.Version;
 
 ---types---
 
