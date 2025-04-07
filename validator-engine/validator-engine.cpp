@@ -5475,6 +5475,22 @@ void ValidatorEngine::run_control_query(ton::ton_api::engine_validator_showShard
   }
 }
 
+void ValidatorEngine::run_control_query(ton::ton_api::engine_validator_getVersion &query,
+                                        td::BufferSlice data, ton::PublicKeyHash src, td::uint32 perm,
+                                        td::Promise<td::BufferSlice> promise) {
+  if (!(perm & ValidatorEnginePermissions::vep_default)) {
+    promise.set_value(create_control_query_error(td::Status::Error(ton::ErrorCode::error, "not authorized")));
+    return;
+  }
+  if (!started_ || full_node_.empty()) {
+    promise.set_value(create_control_query_error(td::Status::Error(ton::ErrorCode::notready, "not started")));
+    return;
+  }
+
+  promise.set_value(
+      ton::serialize_tl_object(ton::create_tl_object<ton::ton_api::engine_validator_version>(GitMetadata::CommitSHA1()), true));
+}
+
 void ValidatorEngine::run_control_query(ton::ton_api::engine_validator_setConsensusNoncriticalParamsOverrides &query,
                                         td::BufferSlice data, ton::PublicKeyHash src, td::uint32 perm,
                                         td::Promise<td::BufferSlice> promise) {
