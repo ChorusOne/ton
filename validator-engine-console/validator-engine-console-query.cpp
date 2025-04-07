@@ -1685,6 +1685,24 @@ td::Status DelShardQuery::receive(td::BufferSlice data) {
   return td::Status::OK();
 }
 
+td::Status GetVersionQuery::run() {
+  TRY_STATUS(tokenizer_.check_endl());
+  return td::Status::OK();
+}
+
+td::Status GetVersionQuery::send() {
+  auto b = ton::create_serialize_tl_object<ton::ton_api::engine_validator_getVersion>();
+  td::actor::send_closure(console_, &ValidatorEngineConsole::envelope_send_query, std::move(b), create_promise());
+  return td::Status::OK();
+}
+
+td::Status GetVersionQuery::receive(td::BufferSlice data) {
+  TRY_RESULT_PREFIX(f, ton::fetch_tl_object<ton::ton_api::engine_validator_version>(data.as_slice(), true),
+                    "received incorrect answer: ");
+  td::TerminalIO::out() << f->version_ << "\n";
+  return td::Status::OK();
+}
+
 td::Status AddCollatorQuery::run() {
   TRY_RESULT_ASSIGN(adnl_id_, tokenizer_.get_token<ton::PublicKeyHash>());
   TRY_RESULT_ASSIGN(shard_, tokenizer_.get_token<ton::ShardIdFull>());
