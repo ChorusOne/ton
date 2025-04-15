@@ -156,6 +156,7 @@ void ValidatorEngineConsole::run() {
   add_query_runner(std::make_unique<QueryRunnerImpl<GetAdnlStatsQuery>>());
   add_query_runner(std::make_unique<QueryRunnerImpl<AddShardQuery>>());
   add_query_runner(std::make_unique<QueryRunnerImpl<DelShardQuery>>());
+  add_query_runner(std::make_unique<QueryRunnerImpl<GetVersionQuery>>());
 }
 
 bool ValidatorEngineConsole::envelope_send_query(td::BufferSlice query, td::Promise<td::BufferSlice> promise) {
