@@ -53,6 +53,8 @@ else
 fi
 
 cmake -GNinja -DTON_USE_JEMALLOC=ON .. \
+-DPORTABLE=1 \
+-DTON_ARCH=x86-64-v2 \
 -DCMAKE_BUILD_TYPE=Release \
 -DOPENSSL_ROOT_DIR=$opensslPath \
 -DOPENSSL_INCLUDE_DIR=$opensslPath/include \
