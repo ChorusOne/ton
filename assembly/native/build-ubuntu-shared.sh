@@ -43,7 +43,7 @@ if [ ! -d "../openssl_3" ]; then
   cd ../openssl_3 || exit
   opensslPath=`pwd`
   git checkout openssl-3.5
-  ./config
+  ./config no-shared -fPIC
   make build_libs -j$(nproc)
   test $? -eq 0 || { echo "Can't compile openssl_3"; exit 1; }
   cd ../build || exit
@@ -54,9 +54,11 @@ fi
 
 cmake -GNinja -DTON_USE_JEMALLOC=ON .. \
 -DCMAKE_BUILD_TYPE=Release \
+-DOPENSSL_USE_STATIC_LIBS=ON \
 -DOPENSSL_ROOT_DIR=$opensslPath \
 -DOPENSSL_INCLUDE_DIR=$opensslPath/include \
--DOPENSSL_CRYPTO_LIBRARY=$opensslPath/libcrypto.so \
+-DOPENSSL_CRYPTO_LIBRARY=$opensslPath/libcrypto.a \
+-DOPENSSL_SSL_LIBRARY=$opensslPath/libssl.a \
 -DCMAKE_INSTALL_PREFIX="$(pwd)/install"
 
 
