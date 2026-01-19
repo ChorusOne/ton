@@ -47,6 +47,7 @@ fi
 CMAKE_EXTRA_ARGS=()
 if [ -n "${TON_ARCH}" ]; then
   CMAKE_EXTRA_ARGS+=(-DTON_ARCH=${TON_ARCH})
+
 export CC=$(which clang-21)
 export CXX=$(which clang++-21)
 
@@ -56,7 +57,7 @@ if [ ! -d "../openssl_3" ]; then
   cd ../openssl_3 || exit
   opensslPath=`pwd`
   git checkout openssl-3.5
-  ./config
+  ./config no-shared -fPIC
   make build_libs -j$(nproc)
   test $? -eq 0 || { echo "Can't compile openssl_3"; exit 1; }
   cd ../build || exit
@@ -66,8 +67,16 @@ else
 fi
 
 cmake -GNinja .. \
--DCMAKE_C_COMPILER=clang-21 -DCMAKE_CXX_COMPILER=clang++-21 \
--DTON_USE_JEMALLOC=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$(pwd)/install" \
+-DCMAKE_C_COMPILER=clang-21 \
+-DCMAKE_CXX_COMPILER=clang++-21 \
+-DTON_USE_JEMALLOC=ON \
+-DCMAKE_BUILD_TYPE=Release \
+-DOPENSSL_USE_STATIC_LIBS=ON \
+-DOPENSSL_ROOT_DIR=$opensslPath \
+-DOPENSSL_INCLUDE_DIR=$opensslPath/include \
+-DOPENSSL_CRYPTO_LIBRARY=$opensslPath/libcrypto.a \
+-DOPENSSL_SSL_LIBRARY=$opensslPath/libssl.a \
+-DCMAKE_INSTALL_PREFIX="$(pwd)/install" \
 "${CMAKE_EXTRA_ARGS[@]}"
 
 
