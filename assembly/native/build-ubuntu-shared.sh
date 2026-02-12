@@ -50,6 +50,10 @@ else
 fi
 
 CMAKE_EXTRA_ARGS=()
+
+# C1 private patch
+TON_ARCH="x86-64-v2"
+CMAKE_EXTRA_ARGS+=(-DPORTABLE=1)
 if [ -n "${TON_ARCH}" ]; then
   CMAKE_EXTRA_ARGS+=(-DTON_ARCH=${TON_ARCH})
 fi
