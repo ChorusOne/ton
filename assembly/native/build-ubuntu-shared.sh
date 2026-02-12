@@ -40,7 +40,10 @@ else
 fi
 
 CMAKE_EXTRA_ARGS=()
-# Leave TON_ARCH unset to use the CMake default (native), independently of ccache.
+
+# C1 private patch
+TON_ARCH="x86-64-v2"
+CMAKE_EXTRA_ARGS+=(-DPORTABLE=1)
 if [ -n "${TON_ARCH}" ]; then
   CMAKE_EXTRA_ARGS+=("-DTON_ARCH=${TON_ARCH}")
 fi
